@@ -1,12 +1,8 @@
 # Description:
 
-#########################################################################
-
 ​	With this application, daily tasks can be displayed in a notepad.
 
 # Settings:
-
-#########################################################################
 
 ## 	Set the paths required for the app to work.
 
