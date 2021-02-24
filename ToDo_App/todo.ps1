@@ -2,7 +2,7 @@
 # Author: Attila Fánczi                                                                                    #
 # Date: 01.25.2021                                                                                         #
 # Project name: ToDoApp                                                                                    #
-# Version: 1.0.0                                                                                           #
+# Version: 1.0.1                                                                                           #
 # Description: It collects and displays the current daily tasks in a txt file when the machine is started. #
 ############################################################################################################
 
@@ -72,35 +72,25 @@ else {
 # If the directory does not exist, it creates the path and then loads the daily content
 
 if (Test-Path *Destination_path_of_ToDo_notepad_directory*) {
-    New-Item -Path "*Destination_path_of_ToDo_notepad_directory*" -Name "ToDo.txt" -ItemType "file"
-    $Date > *ToDo_notepad_destination_path*
-    $List = Get-Content *ToDo_notepad_destination_path*
-    $DateTest = $List | Select-String $Date
-    $TextList = Get-Content *Destination_path_of_task_list_for_todo_app*
-    $DalyList = $TextList | Select-String $Date
-    $Dalyroutinelist = $DalyList -split "$Date"
-    Write-Output "_________________________________" >> *ToDo_notepad_destination_path*
-    Write-Output "Hi BOSS! What are we doing today?" >> *ToDo_notepad_destination_path*
-    Write-Output " "
-    Write-Output " "
-    Write-Output $Dalyroutinelist >> *ToDo_notepad_destination_path*
+    if (!(Test-Path *Destination_path_of_task_list_for_todo_app*)) {
+        Copy-Item -Path "*Safety_dectination_path_of_task_list_for_todo_app*" -Destination "*Destination_path_of_ToDo_notepad_directory*"
+    }
+    if (!(Test-Path *ToDo_notepad_destination_path*)) {
+        New-Item -Path "*Destination_path_of_ToDo_notepad_directory*" -Name "ToDo.txt" -ItemType "file"
+        $Date > *ToDo_notepad_destination_path* 
+        Start-Process "*Destination path where you put todo.ps1 file*"
+        break
+    }
 
 }
 else {
 
     New-Item -Path "$HOME" -Name "TODO" -ItemType "directory"
-    New-Item -Path "*Destination_path_of_ToDo_notepad_directory*" -Name "ToDo.txt" -ItemType "file"
-    $Date > *ToDo_notepad_destination_path*
-    $List = Get-Content *ToDo_notepad_destination_path*
-    $DateTest = $List | Select-String $Date
-    $TextList = Get-Content *Destination_path_of_task_list_for_todo_app*
-    $DalyList = $TextList | Select-String $Date
-    $Dalyroutinelist = $DalyList -split "$Date"
-    Write-Output "_________________________________" >> *ToDo_notepad_destination_path*
-    Write-Output "Hi BOSS! What are we doing today?" >> *ToDo_notepad_destination_path*
-    Write-Output " "
-    Write-Output " "
-    Write-Output $Dalyroutinelist >> *ToDo_notepad_destination_path*
+        New-Item -Path "*Destination_path_of_ToDo_notepad_directory*" -Name "ToDo.txt" -ItemType "file"
+        Copy-Item -Path "*Safety_dectination_path_of_task_list_for_todo_app*" -Destination "*Destination_path_of_ToDo_notepad_directory*"
+        $Date > *ToDo_notepad_destination_path* 
+        Start-Process "*Destination path where you put todo.ps1 file*"
+        break
 }
 
 }
