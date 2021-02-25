@@ -27,7 +27,7 @@ if (Test-Path *ToDo_notepad_destination_path*) {
     $Dalyroutinelist = $DalyList -split "$Date"
 
     # File control commands organized into functions, thus avoiding a multitude of redundant data
-    
+
     function content_directed_to_a_file {
         Write-Output "_________________________________" >> *ToDo_notepad_destination_path*
         Write-Output "Hi BOSS! What are we doing today?" >> *ToDo_notepad_destination_path*
@@ -60,7 +60,7 @@ if (Test-Path *ToDo_notepad_destination_path*) {
         }
         else {
             mkdir *ToDo_log_directory_path* 
-            Start-Process "G:\Startup_Apps\todo.ps1"
+            Start-Process "*Destination path where you put todo.ps1 file*"
             break
         }
     }
