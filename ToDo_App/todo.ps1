@@ -2,7 +2,7 @@
 # Author: Attila Fánczi                                                                                    #
 # Date: 01.25.2021                                                                                         #
 # Project name: ToDoApp                                                                                    #
-# Version: 1.0.2                                                                                           #
+# Version: 1.0.3                                                                                           #
 # Description: It collects and displays the current daily tasks in a txt file when the machine is started. #
 ############################################################################################################
 
@@ -67,6 +67,13 @@ if (Test-Path *ToDo_notepad_destination_path*) {
 }
 else {
 
+    function create_file_and_restart_process {
+        New-Item -Path "*Destination_path_of_ToDo_notepad_directory*" -Name "ToDo.txt" -ItemType "file"
+        $Date > *ToDo_notepad_destination_path* 
+        Start-Process -WindowStyle hidden "*Destination path where you put todo.ps1 file*"
+        break
+    }
+
     # If the directory does not exist, it creates the path and then loads the daily content
 
     if (Test-Path *Destination_path_of_ToDo_notepad_directory*) {
@@ -74,20 +81,13 @@ else {
             Copy-Item -Path "*Safety_dectination_path_of_task_list_for_todo_app*" -Destination "*Destination_path_of_ToDo_notepad_directory*"
         }
         if (!(Test-Path *ToDo_notepad_destination_path*)) {
-            New-Item -Path "*Destination_path_of_ToDo_notepad_directory*" -Name "ToDo.txt" -ItemType "file"
-            $Date > *ToDo_notepad_destination_path* 
-            Start-Process "*Destination path where you put todo.ps1 file*"
-            break
+            create_file_and_restart_process
         }
     }
     else {
-
         New-Item -Path "$HOME" -Name "TODO" -ItemType "directory"
-        New-Item -Path "*Destination_path_of_ToDo_notepad_directory*" -Name "ToDo.txt" -ItemType "file"
         Copy-Item -Path "*Safety_dectination_path_of_task_list_for_todo_app*" -Destination "*Destination_path_of_ToDo_notepad_directory*"
-        $Date > *ToDo_notepad_destination_path* 
-        Start-Process "*Destination path where you put todo.ps1 file*"
-        break
+        create_file_and_restart_process
     }
 }
 
